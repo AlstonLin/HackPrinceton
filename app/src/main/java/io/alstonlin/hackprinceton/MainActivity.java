@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.Toast;
 
 import java.io.Serializable;
 
@@ -47,6 +48,10 @@ public class MainActivity extends AppCompatActivity implements Serializable {
             public void onTabReselected(TabLayout.Tab tab) {
             }
         });
+    }
+
+    public void onFoodAdded(Food food){
+        Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

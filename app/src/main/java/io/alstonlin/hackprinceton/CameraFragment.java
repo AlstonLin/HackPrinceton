@@ -24,7 +24,7 @@ public class CameraFragment extends Fragment {
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
             Bitmap image = BitmapFactory.decodeByteArray(data, 0, data.length);
-            DAO.getInstance().uploadImage(image);
+            DAO.getInstance().addFood(image, activity);
             camera.startPreview();
         }
     };
