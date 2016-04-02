@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 /**
  * The Fragment for the image feed in AppActivity
  */
-public class DataFragment extends Fragment {
+public class HistoryFragment extends Fragment {
 
     private static final String ARG_ACTIVITY = "activity";
     private MainActivity activity;
@@ -21,8 +21,8 @@ public class DataFragment extends Fragment {
      * @param activity The Activity this Fragment will be attached to
      * @return The new Fragment instance
      */
-    public static DataFragment newInstance(MainActivity activity) {
-        final DataFragment fragment = new DataFragment();
+    public static HistoryFragment newInstance(MainActivity activity) {
+        final HistoryFragment fragment = new HistoryFragment();
         Bundle args = new Bundle();
         args.putSerializable(ARG_ACTIVITY, activity);
         fragment.setArguments(args);

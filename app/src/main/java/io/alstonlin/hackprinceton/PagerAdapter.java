@@ -26,7 +26,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
                 CameraFragment cam = CameraFragment.newInstance(activity);
                 return cam;
             case 1:
-                DataFragment data = DataFragment.newInstance(activity);
+                HistoryFragment data = HistoryFragment.newInstance(activity);
                 return data;
             default:
                 return null;

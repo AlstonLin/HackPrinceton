@@ -23,11 +23,13 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -145,6 +147,50 @@ public class DAO {
                 e.printStackTrace();
             }
             return null;
+        }
+    }
+
+    private class GetFoodTask extends AsyncTask<Void, Void, ArrayList<Food>> {
+        private PagerAdapter adapter;
+        public GetFoodTask(PagerAdapter adapter){
+            this.adapter = adapter;
+        }
+
+
+        @Override
+        protected ArrayList<Food> doInBackground(Void... params) {
+            HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost(SERVER_URL + SIGN_UP_ENDPOINT);
+            List<NameValuePair> data = new ArrayList<>(1);
+            data.add(new BasicNameValuePair("user_id", id));
+            try{
+                post.setEntity(new UrlEncodedFormEntity(data));
+                HttpResponse response = client.execute(post);
+                HttpEntity entity = response.getEntity();
+                JSONObject result = new JSONObject(EntityUtils.toString(entity, "UTF-8"));
+                if (result.getBoolean("success")){
+                    JSONArray array = result.getJSONArray("data");
+                    ArrayList<Food> foods = new ArrayList<>();
+                    for (int i = 0; i < array.length(); i++){
+                        foods.add(new Food(array.getJSONObject(i)));
+                    }
+                    return foods;
+                } else{
+                    return null;
+                }
+            } catch (IOException e){
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<Food> foods) {
+            super.onPostExecute(foods);
         }
     }
 

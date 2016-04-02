@@ -1,8 +1,16 @@
 package io.alstonlin.hackprinceton;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Food {
     private String name;
     private String id;
+    private Date createdAt;
     private int calories;
     private int colesterol;
     private int fat;
@@ -23,8 +31,17 @@ public class Food {
         this.sodium = sodium;
     }
 
-    public Food(){
-
+    public Food(JSONObject json) throws JSONException, ParseException {
+        this.id = json.getString("_id");
+        this.name = json.getString("name");
+        this.createdAt = new SimpleDateFormat().parse(json.getString("createdAt"));
+        this.calories = json.getInt("calories");
+        this.sodium = json.getInt("sodium");
+        this.sugar = json.getInt("sugar");
+        this.carbs = json.getInt("carbs");
+        this.protien = json.getInt("protien");
+        this.fat = json.getInt("fat");
+        this.colesterol = json.getInt("colesterol");
     }
 
     public String getName() {
