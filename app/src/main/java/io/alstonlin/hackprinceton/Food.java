@@ -6,6 +6,7 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Food {
     private String name;
@@ -34,7 +35,10 @@ public class Food {
     public Food(JSONObject json) throws JSONException, ParseException {
         this.id = json.getString("_id");
         this.name = json.getString("name");
-        this.createdAt = new SimpleDateFormat().parse(json.getString("createdAt"));
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+        TimeZone utc = TimeZone.getTimeZone("UTC");
+        formatter.setTimeZone(utc);
+        this.createdAt = formatter.parse(json.getString("createdAt"));
         this.calories = json.getInt("calories");
         this.sodium = json.getInt("sodium");
         this.sugar = json.getInt("sugar");
@@ -78,5 +82,9 @@ public class Food {
 
     public int getSodium() {
         return sodium;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
     }
 }

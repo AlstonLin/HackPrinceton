@@ -7,11 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 public class MainActivity extends AppCompatActivity implements Serializable {
 
     private TabLayout tabLayout;
+    private ArrayList<Food> foods;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,13 +21,15 @@ public class MainActivity extends AppCompatActivity implements Serializable {
         setContentView(R.layout.activity_main);
         setupTabs();
         setupViewPager();
+        foods = new ArrayList<>();
     }
 
 
     private void setupTabs(){
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
-        tabLayout.addTab(tabLayout.newTab().setText("Snap"));
-        tabLayout.addTab(tabLayout.newTab().setText("Data"));
+        tabLayout.addTab(tabLayout.newTab().setText("Track"));
+        tabLayout.addTab(tabLayout.newTab().setText("History"));
+        tabLayout.addTab(tabLayout.newTab().setText("Visualize"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
     }
 
@@ -57,5 +61,13 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    public ArrayList<Food> getFoods() {
+        return foods;
+    }
+
+    public void setFoods(ArrayList<Food> foods) {
+        this.foods = foods;
     }
 }

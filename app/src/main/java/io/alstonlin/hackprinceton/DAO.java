@@ -41,6 +41,7 @@ public class DAO {
     public static final String SERVER_URL = "http://ec2-52-23-228-170.compute-1.amazonaws.com:3000";
     public static final String LOGIN_ENDPOINT = "/login";
     public static final String SIGN_UP_ENDPOINT = "/newuser";
+    public static final String GET_FOOD_ENDPOINT = "/getFood";
     public static final String NEW_FOOD_ENDPOINT = "/newFood";
     public static final String CLARIFAI_APP_ID = "fbVSSR7x8TQ8in4DUKaFeLYA7J1WqkLzneTZzRAp";
     public static final String CLARIFAI_APP_SECRET = "4cqsv2jVsMktcmsptdfoVnl8Hq-XpIp_16XCBBQV";
@@ -49,7 +50,7 @@ public class DAO {
             "egg", "donut", "bagel", "pizza", "granola", "chocolate", "water", "lettuce", "tomato", "cheese", "cake",
             "olive oil");
     public static DAO instance;
-
+    private HistoryAdapter adapter;
     private String id = null;
 
     /**
@@ -80,6 +81,9 @@ public class DAO {
         new LoginTask(activity).execute(username, password);
     }
 
+    public void getFood(HistoryAdapter adapter){
+        new GetFoodTask(adapter).execute();
+    }
     // Asynchronous stuff
 
     private class LoginTask extends AsyncTask<String, Void, String> {
@@ -151,16 +155,15 @@ public class DAO {
     }
 
     private class GetFoodTask extends AsyncTask<Void, Void, ArrayList<Food>> {
-        private PagerAdapter adapter;
-        public GetFoodTask(PagerAdapter adapter){
-            this.adapter = adapter;
+        public GetFoodTask(HistoryAdapter adapter){
+            DAO.this.adapter = adapter;
         }
 
 
         @Override
         protected ArrayList<Food> doInBackground(Void... params) {
             HttpClient client = new DefaultHttpClient();
-            HttpPost post = new HttpPost(SERVER_URL + SIGN_UP_ENDPOINT);
+            HttpPost post = new HttpPost(SERVER_URL + GET_FOOD_ENDPOINT);
             List<NameValuePair> data = new ArrayList<>(1);
             data.add(new BasicNameValuePair("user_id", id));
             try{
@@ -191,6 +194,7 @@ public class DAO {
         @Override
         protected void onPostExecute(ArrayList<Food> foods) {
             super.onPostExecute(foods);
+            adapter.setDataSet(foods);
         }
     }
 
@@ -219,6 +223,7 @@ public class DAO {
         protected void onPostExecute(Boolean success) {
             if (success){
                 activity.onFoodAdded(food);
+                getFood(adapter);
             } else {
                 Toast.makeText(activity, "Could not detect the food", Toast.LENGTH_LONG).show();
             }
@@ -305,14 +310,15 @@ public class DAO {
         HttpClient client = new DefaultHttpClient();
         HttpPost post = new HttpPost(SERVER_URL + NEW_FOOD_ENDPOINT);
         List<NameValuePair> data = new ArrayList<>(8);
+        data.add(new BasicNameValuePair("user_id", id));
         data.add(new BasicNameValuePair("name", food.getName()));
         data.add(new BasicNameValuePair("calories", Integer.toString(food.getCalories())));
-        data.add(new BasicNameValuePair("colesterol", Integer.toString(food.getCalories())));
-        data.add(new BasicNameValuePair("fat", Integer.toString(food.getCalories())));
-        data.add(new BasicNameValuePair("protien", Integer.toString(food.getCalories())));
-        data.add(new BasicNameValuePair("carbs", Integer.toString(food.getCalories())));
-        data.add(new BasicNameValuePair("sugar", Integer.toString(food.getCalories())));
-        data.add(new BasicNameValuePair("sodium", Integer.toString(food.getCalories())));
+        data.add(new BasicNameValuePair("colesterol", Integer.toString(food.getColesterol())));
+        data.add(new BasicNameValuePair("fat", Integer.toString(food.getFat())));
+        data.add(new BasicNameValuePair("protien", Integer.toString(food.getProtien())));
+        data.add(new BasicNameValuePair("carbs", Integer.toString(food.getCarbs())));
+        data.add(new BasicNameValuePair("sugar", Integer.toString(food.getSugar())));
+        data.add(new BasicNameValuePair("sodium", Integer.toString(food.getSodium())));
         try{
             post.setEntity(new UrlEncodedFormEntity(data));
             HttpResponse response = client.execute(post);

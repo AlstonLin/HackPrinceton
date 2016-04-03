@@ -2,19 +2,19 @@ package io.alstonlin.hackprinceton;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
 /**
  * The Adapter for MainActivity to handle all the Fragments.
  */
-public class PagerAdapter extends FragmentStatePagerAdapter {
+public class PagerAdapter extends FragmentPagerAdapter {
 
-    private static final int NUM_TABS = 2;
+    private static final int NUM_TABS = 3;
     private MainActivity activity;
 
 
-    public PagerAdapter(FragmentManager fm, MainActivity activity) {
-        super(fm);
+    public PagerAdapter(FragmentManager manager, MainActivity activity) {
+        super(manager);
         this.activity = activity;
     }
 
@@ -23,11 +23,11 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
         switch (position) {
             case 0:
-                CameraFragment cam = CameraFragment.newInstance(activity);
-                return cam;
+                return CameraFragment.newInstance(activity);
             case 1:
-                HistoryFragment data = HistoryFragment.newInstance(activity);
-                return data;
+                return HistoryFragment.newInstance(activity);
+            case 2:
+                return VisualizeFragment.newInstance(activity);
             default:
                 return null;
         }

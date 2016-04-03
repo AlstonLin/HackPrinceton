@@ -63,10 +63,6 @@ public class CameraFragment extends Fragment {
         return fragment;
     }
 
-    /*
-     * BELOW ARE THE AUTO-GENERATED ANDROID FRAGMENT METHODS.
-     */
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,7 +70,7 @@ public class CameraFragment extends Fragment {
             activity = (MainActivity) getArguments().getSerializable(ARG_ACTIVITY);
         }
         camera = getCameraInstance();
-        preview = new CameraPreview(activity, camera);
+        preview = new CameraPreview(activity);
     }
 
     @Override
@@ -97,7 +93,7 @@ public class CameraFragment extends Fragment {
     public void onResume() {
         super.onResume();
         camera = getCameraInstance();
-        preview = new CameraPreview(activity, camera);
+        preview = new CameraPreview(activity);
     }
 
 
