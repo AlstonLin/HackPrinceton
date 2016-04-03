@@ -4,10 +4,11 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:gravity="center"
         android:id="@+id/name"
+        android:background="#007E92"
         android:textSize="32sp"
         android:text="Item Name"/>
 
@@ -21,8 +22,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -30,7 +29,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textSize="14sp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:paddingLeft="5dp"
+            android:background="@drawable/border"
             android:paddingRight="5dp"
             android:id="@+id/calories"
             android:text="Calories: "/>
@@ -40,15 +42,17 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:gravity="center"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
+            android:background="@drawable/border"
             android:id="@+id/colesterol"
             android:text="Colesterol: "/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -57,6 +61,8 @@
             android:textSize="14sp"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/border"
             android:id="@+id/fat"
             android:gravity="center"
             android:layout_gravity="center"
@@ -67,8 +73,10 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:gravity="center"
+            android:paddingBottom="10dp"
             android:layout_gravity="center"
             android:id="@+id/protien"
+            android:background="@drawable/border"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:text="Protien: "/>
@@ -76,7 +84,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
         android:orientation="horizontal">
         <TextView
             android:layout_width="0dp"
@@ -84,8 +91,10 @@
             android:layout_height="wrap_content"
             android:textSize="14sp"
             android:paddingLeft="5dp"
+            android:background="@drawable/border"
             android:paddingRight="5dp"
             android:gravity="center"
+            android:paddingBottom="10dp"
             android:layout_gravity="center"
             android:id="@+id/carbs"
             android:text="Carbs: "/>
@@ -97,8 +106,10 @@
             android:gravity="center"
             android:layout_gravity="center"
             android:paddingLeft="5dp"
+            android:background="@drawable/border"
             android:paddingRight="5dp"
             android:id="@+id/sugar"
+            android:paddingBottom="10dp"
             android:text="Sugar: "/>
 
         <TextView
@@ -108,6 +119,8 @@
             android:textSize="14sp"
             android:layout_gravity="center"
             android:paddingLeft="5dp"
+            android:paddingBottom="10dp"
+            android:background="@drawable/border"
             android:paddingRight="5dp"
             android:id="@+id/sodium"
             android:gravity="center"
@@ -119,8 +132,9 @@
         android:layout_height="wrap_content"
         android:id="@+id/close"
         android:text="Close"
+        android:layout_marginTop="5dp"
         android:background="#F44336"
         android:onClick="closeDialog"
         android:layout_marginBottom="15dp"
-        android:layout_gravity="center_horizontal" />
+        android:layout_gravity="center" />
 </LinearLayout>

@@ -79,6 +79,7 @@ public class CameraFragment extends Fragment {
         FrameLayout previewFrame = (FrameLayout) v.findViewById(R.id.camera_preview);
         previewFrame.addView(preview, 0);
         FloatingActionButton captureButton = (FloatingActionButton) v.findViewById(R.id.capture);
+        captureButton.setImageResource(R.drawable.track);
         captureButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override

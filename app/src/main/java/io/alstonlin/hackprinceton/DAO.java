@@ -55,9 +55,8 @@ public class DAO {
     public static final String CLARIFAI_APP_ID = "fbVSSR7x8TQ8in4DUKaFeLYA7J1WqkLzneTZzRAp";
     public static final String CLARIFAI_APP_SECRET = "4cqsv2jVsMktcmsptdfoVnl8Hq-XpIp_16XCBBQV";
     // Food to recognize
-    public static final List<String> foods = Arrays.asList("apple", "coffee", "chips", "banana", "cookie", "pretzel",
-            "egg", "donut", "bagel", "pizza", "granola", "chocolate", "water", "lettuce", "tomato", "cheese", "cake",
-            "olive oil");
+    public static final List<String> foods = Arrays.asList("apple", "coffee", "chips", "banana", "cookie", "egg", "donut", "bagel", "pizza", "chocolate",
+            "pasta");
     public static DAO instance;
     private HistoryAdapter adapter;
     private String id = null;

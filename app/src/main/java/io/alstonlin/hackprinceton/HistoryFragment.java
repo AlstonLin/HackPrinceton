@@ -1,6 +1,7 @@
 package io.alstonlin.hackprinceton;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.format.DateUtils;
@@ -83,12 +84,35 @@ public class HistoryFragment extends Fragment {
                 sugarPercent = Math.round(sugar * 100.0 / Food.HEALTHY_SUGAR),
                 sodiumPercent = Math.round(sodium * 100.0 / Food.HEALTHY_SODIUM);
 
-        caloriesView.setText("Calories\n" + calories + " (" + caloriesPercent + "%)");
-        colesterolView.setText("Colesterol\n" + colesterol + " (" + colesterolPercent + "%)");
-        fatView.setText("Fat\n" + fat + " (" + fatPercent + "%)");
-        protienView.setText("Protien\n" + protien + " (" + protienPercent + "%)");
-        carbsView.setText("Carbs\n" + carbs + " (" + carbsPercent + "%)");
-        sugarView.setText("Sugar\n" + sugar + " (" + sugarPercent + "%)");
-        sodiumView.setText("Sodium\n" + sodium + " (" + sodiumPercent + "%)");
+        caloriesView.setText("Calories\n" + calories + "kcal (" + caloriesPercent + "%)");
+        colesterolView.setText("Colesterol\n" + colesterol + "mg (" + colesterolPercent + "%)");
+        fatView.setText("Fat\n" + fat + "mg (" + fatPercent + "%)");
+        protienView.setText("Protien\n" + protien + "mg (" + protienPercent + "%)");
+        carbsView.setText("Carbs\n" + carbs + "mg (" + carbsPercent + "%)");
+        sugarView.setText("Sugar\n" + sugar + "mg (" + sugarPercent + "%)");
+        sodiumView.setText("Sodium\n" + sodium + "mg (" + sodiumPercent + "%)");
+
+        // Changes color
+        if (caloriesPercent >= 100){
+            caloriesView.setBackgroundColor(Color.parseColor("#EF5350"));
+        }
+        if (colesterolPercent >= 100){
+            colesterolView.setBackgroundColor(Color.parseColor("#EF5350"));
+        }
+        if (fatPercent >= 100){
+            fatView.setBackgroundColor(Color.parseColor("#EF5350"));
+        }
+        if (protienPercent >= 100){
+            protienView.setBackgroundColor(Color.parseColor("#EF5350"));
+        }
+        if (carbsPercent >= 100){
+            carbsView.setBackgroundColor(Color.parseColor("#EF5350"));
+        }
+        if (sugarPercent >= 100){
+            sugarView.setBackgroundColor(Color.parseColor("#EF5350"));
+        }
+        if (sodiumPercent >= 100){
+            sodiumView.setBackgroundColor(Color.parseColor("#EF5350"));
+        }
     }
 }

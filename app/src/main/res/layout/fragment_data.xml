@@ -18,7 +18,6 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
@@ -27,6 +26,8 @@
                 android:textSize="14sp"
                 android:id="@+id/calories"
                 android:gravity="center"
+                android:background="@drawable/border"
+                android:paddingBottom="10dp"
                 android:text="Calories: "/>
             <TextView
                 android:layout_width="0dp"
@@ -35,12 +36,13 @@
                 android:textSize="14sp"
                 android:id="@+id/colesterol"
                 android:gravity="center"
+                android:background="@drawable/border"
+                android:paddingBottom="10dp"
                 android:text="Colesterol: "/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
@@ -49,6 +51,8 @@
                 android:textSize="14sp"
                 android:id="@+id/fat"
                 android:gravity="center"
+                android:background="@drawable/border"
+                android:paddingBottom="10dp"
                 android:layout_gravity="center"
                 android:text="Fat: "/>
             <TextView
@@ -57,14 +61,15 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:layout_gravity="center"
+                android:background="@drawable/border"
                 android:id="@+id/protien"
                 android:gravity="center"
+                android:paddingBottom="10dp"
                 android:text="Protien: "/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="10dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
@@ -74,6 +79,8 @@
                 android:layout_gravity="center"
                 android:id="@+id/carbs"
                 android:gravity="center"
+                android:background="@drawable/border"
+                android:paddingBottom="10dp"
                 android:text="Carbs: "/>
             <TextView
                 android:layout_width="0dp"
@@ -83,6 +90,8 @@
                 android:layout_gravity="center"
                 android:id="@+id/sugar"
                 android:gravity="center"
+                android:background="@drawable/border"
+                android:paddingBottom="10dp"
                 android:text="Sugar: "/>
             <TextView
                 android:layout_width="0dp"
@@ -92,6 +101,8 @@
                 android:layout_gravity="center"
                 android:id="@+id/sodium"
                 android:gravity="center"
+                android:background="@drawable/border"
+                android:paddingBottom="10dp"
                 android:text="Sodium: "/>
         </LinearLayout>
         </LinearLayout>

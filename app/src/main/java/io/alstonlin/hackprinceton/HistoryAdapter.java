@@ -3,6 +3,7 @@ package io.alstonlin.hackprinceton;
 import android.app.Dialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.os.AsyncTask;
 import android.text.format.DateUtils;
@@ -62,20 +63,61 @@ public class HistoryAdapter extends BaseAdapter{
                 dialog.setContentView(R.layout.food_dialog);
                 dialog.show();
                 new DownloadImageTask((ImageView) dialog.findViewById(R.id.image)).execute(food.getImageUrl());
+
+                long caloriesPercent = Math.round(food.getCalories() * 100.0 / Food.HEALTHY_CALORIES),
+                        colesterolPercent = Math.round(food.getColesterol() * 100.0 / Food.HEALTHY_COLESTEROL),
+                        fatPercent = Math.round(food.getFat() * 100.0 / Food.HEALTHY_FAT),
+                        protienPercent = Math.round(food.getProtien() * 100.0 / Food.HEALTHY_PROTIEN),
+                        carbsPercent = Math.round(food.getCarbs() * 100.0 / Food.HEALTHY_CARBS),
+                        sugarPercent = Math.round(food.getSugar() * 100.0 / Food.HEALTHY_SUGAR),
+                        sodiumPercent = Math.round(food.getSodium() * 100.0 / Food.HEALTHY_SODIUM);
+
+                TextView caloriesView = (TextView) dialog.findViewById(R.id.calories);
+                TextView colesterolView = (TextView) dialog.findViewById(R.id.colesterol);
+                TextView fatView = (TextView) dialog.findViewById(R.id.fat);
+                TextView protienView = (TextView) dialog.findViewById(R.id.protien);
+                TextView carbsView = (TextView) dialog.findViewById(R.id.carbs);
+                TextView sugarView = (TextView) dialog.findViewById(R.id.sugar);
+                TextView sodiumView = (TextView) dialog.findViewById(R.id.sodium);
+
                 ((TextView) dialog.findViewById(R.id.name)).setText(capitalize(food.getName()));
-                ((TextView) dialog.findViewById(R.id.calories)).setText("Calories\n" + food.getCalories() + "kcal");
-                ((TextView)dialog.findViewById(R.id.colesterol)).setText("Colesterol\n" + food.getColesterol() + "mg");
-                ((TextView)dialog.findViewById(R.id.fat)).setText("Fat\n" + food.getFat() + "mg");
-                ((TextView)dialog.findViewById(R.id.protien)).setText("Protien\n" + food.getProtien() + "mg");
-                ((TextView)dialog.findViewById(R.id.carbs)).setText("Carbs\n" + food.getCarbs() + "mg");
-                ((TextView)dialog.findViewById(R.id.sugar)).setText("Sugar\n" + food.getSugar() + "mg");
-                ((TextView)dialog.findViewById(R.id.sodium)).setText("Sodium\n" + food.getSodium() + "mg");
+                caloriesView.setText("Calories\n" + food.getCalories() + "kcal (" + caloriesPercent + "%)");
+                colesterolView.setText("Colesterol\n" + food.getColesterol() + "mg (" + colesterolPercent + "%)");
+                fatView.setText("Fat\n" + food.getFat() + "mg (" + fatPercent + "%)");
+                protienView.setText("Protien\n" + food.getProtien() + "mg (" + protienPercent + "%)");
+                carbsView.setText("Carbs\n" + food.getCarbs() + "mg (" + carbsPercent + "%)");
+                sugarView.setText("Sugar\n" + food.getSugar() + "mg (" + sugarPercent + "%)");
+                sodiumView.setText("Sodium\n" + food.getSodium() + "mg (" + sodiumPercent + "%)");
                 dialog.findViewById(R.id.close).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
                     }
                 });
+
+                // Changes color
+                if (caloriesPercent >= 35){
+                    caloriesView.setBackgroundColor(Color.parseColor("#FFEB3B"));
+                }
+                if (colesterolPercent >= 35){
+                    colesterolView.setBackgroundColor(Color.parseColor("#FFEB3B"));
+                }
+                if (fatPercent >= 35){
+                    fatView.setBackgroundColor(Color.parseColor("#FFEB3B"));
+                }
+                if (protienPercent >= 35){
+                    protienView.setBackgroundColor(Color.parseColor("#FFEB3B"));
+                }
+                if (carbsPercent >= 35){
+                    carbsView.setBackgroundColor(Color.parseColor("#FFEB3B"));
+                }
+                if (sugarPercent >= 35){
+                    sugarView.setBackgroundColor(Color.parseColor("#FFEB3B"));
+                }
+                if (sodiumPercent >= 35){
+                    sodiumView.setBackgroundColor(Color.parseColor("#FFEB3B"));
+                }
+
             }
         });
         return convertView;
