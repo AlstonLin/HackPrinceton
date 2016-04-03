@@ -20,14 +20,13 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-
         switch (position) {
             case 0:
                 return CameraFragment.newInstance(activity);
             case 1:
-                return HistoryFragment.newInstance(activity);
-            case 2:
                 return VisualizeFragment.newInstance(activity);
+            case 2:
+                return HistoryFragment.newInstance(activity);
             default:
                 return null;
         }

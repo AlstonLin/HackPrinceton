@@ -3,10 +3,12 @@ package io.alstonlin.hackprinceton;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 
 /**
@@ -34,7 +36,7 @@ public class HistoryFragment extends Fragment {
 
     private void setupAdapter(View v){
         ListView list = (ListView) v.findViewById(R.id.list);
-        HistoryAdapter adapter = new HistoryAdapter(activity);
+        HistoryAdapter adapter = new HistoryAdapter(activity, this);
         list.setAdapter(adapter);
         this.adapter = adapter;
         DAO.getInstance().getFood(adapter);
@@ -50,5 +52,42 @@ public class HistoryFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_data, container, false);
         setupAdapter(v);
         return v;
+    }
+
+    public void setupStats(){
+        TextView caloriesView = (TextView) getView().findViewById(R.id.calories);
+        TextView colesterolView = (TextView) getView().findViewById(R.id.colesterol);
+        TextView fatView = (TextView) getView().findViewById(R.id.fat);
+        TextView protienView = (TextView) getView().findViewById(R.id.protien);
+        TextView carbsView = (TextView) getView().findViewById(R.id.carbs);
+        TextView sugarView = (TextView) getView().findViewById(R.id.sugar);
+        TextView sodiumView = (TextView) getView().findViewById(R.id.sodium);
+        int calories = 0, colesterol = 0, fat = 0, protien = 0, carbs = 0, sugar = 0, sodium = 0;
+        for (Food f : activity.getFoods()){
+            if (DateUtils.isToday(f.getCreatedAt().getTime())){
+                calories += f.getCalories();
+                colesterol += f.getColesterol();
+                fat += f.getFat();
+                protien += f.getProtien();
+                carbs += f.getCarbs();
+                sugar += f.getSugar();
+                sodium += f.getSodium();
+            }
+        }
+        long caloriesPercent = Math.round(calories * 100.0 / Food.HEALTHY_CALORIES),
+                colesterolPercent = Math.round(colesterol * 100.0 / Food.HEALTHY_COLESTEROL),
+                fatPercent = Math.round(fat * 100.0 / Food.HEALTHY_FAT),
+                protienPercent = Math.round(protien * 100.0 / Food.HEALTHY_PROTIEN),
+                carbsPercent = Math.round(carbs * 100.0 / Food.HEALTHY_CARBS),
+                sugarPercent = Math.round(sugar * 100.0 / Food.HEALTHY_SUGAR),
+                sodiumPercent = Math.round(sodium * 100.0 / Food.HEALTHY_SODIUM);
+
+        caloriesView.setText("Calories: " + calories + " (" + caloriesPercent + "%)");
+        colesterolView.setText("Colesterol: " + colesterol + " (" + colesterolPercent + "%)");
+        fatView.setText("Fat: " + fat + " (" + fatPercent + "%)");
+        protienView.setText("Protien: " + protien + " (" + protienPercent + "%)");
+        carbsView.setText("Carbs: " + carbs + " (" + carbsPercent + "%)");
+        sugarView.setText("Sugar: " + sugar + " (" + sugarPercent + "%)");
+        sodiumView.setText("Sodium: " + sodium + " (" + sodiumPercent + "%)");
     }
 }

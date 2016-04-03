@@ -28,8 +28,8 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private void setupTabs(){
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Track"));
-        tabLayout.addTab(tabLayout.newTab().setText("History"));
         tabLayout.addTab(tabLayout.newTab().setText("Visualize"));
+        tabLayout.addTab(tabLayout.newTab().setText("History"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
     }
 
@@ -55,7 +55,6 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     }
 
     public void onFoodAdded(Food food){
-        Toast.makeText(this, "Success!", Toast.LENGTH_SHORT).show();
     }
 
     @Override

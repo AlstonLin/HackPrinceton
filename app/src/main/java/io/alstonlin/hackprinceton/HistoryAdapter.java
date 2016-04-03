@@ -11,9 +11,11 @@ import java.util.ArrayList;
 
 public class HistoryAdapter extends BaseAdapter{
     private MainActivity activity;
+    private HistoryFragment fragment;
 
-    public HistoryAdapter(MainActivity activity){
+    public HistoryAdapter(MainActivity activity, HistoryFragment fragment){
         this.activity = activity;
+        this.fragment = fragment;
     }
 
     @Override
@@ -50,5 +52,7 @@ public class HistoryAdapter extends BaseAdapter{
     public void setDataSet(ArrayList<Food> foods){
         this.activity.setFoods(foods);
         notifyDataSetChanged();
+        fragment.setupStats();
+        VisualizeFragment.instance.notifyDataChanged();
     }
 }

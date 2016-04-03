@@ -3,12 +3,21 @@ package io.alstonlin.hackprinceton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.TimeZone;
 
-public class Food {
+public class Food implements Serializable{
+
+    public static final int HEALTHY_CALORIES = 2500;
+    public static final int HEALTHY_COLESTEROL = 300;
+    public static final int HEALTHY_FAT = 70000;
+    public static final int HEALTHY_PROTIEN = 56000;
+    public static final int HEALTHY_CARBS = 400000;
+    public static final int HEALTHY_SUGAR = 36000;
+    public static final int HEALTHY_SODIUM = 23000;
     private String name;
     private String id;
     private Date createdAt;
