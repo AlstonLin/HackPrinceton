@@ -6,17 +6,19 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="#E0E0E0"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
+            android:textSize="21sp"
             android:layout_gravity="center"
-            android:text="Today"/>
+            android:text="Today's Intake"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
@@ -24,6 +26,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:id="@+id/calories"
+                android:gravity="center"
                 android:text="Calories: "/>
             <TextView
                 android:layout_width="0dp"
@@ -31,11 +34,13 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:id="@+id/colesterol"
+                android:gravity="center"
                 android:text="Colesterol: "/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
@@ -43,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="14sp"
                 android:id="@+id/fat"
+                android:gravity="center"
                 android:layout_gravity="center"
                 android:text="Fat: "/>
             <TextView
@@ -52,11 +58,13 @@
                 android:textSize="14sp"
                 android:layout_gravity="center"
                 android:id="@+id/protien"
+                android:gravity="center"
                 android:text="Protien: "/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingBottom="10dp"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="0dp"
@@ -65,6 +73,7 @@
                 android:textSize="14sp"
                 android:layout_gravity="center"
                 android:id="@+id/carbs"
+                android:gravity="center"
                 android:text="Carbs: "/>
             <TextView
                 android:layout_width="0dp"
@@ -73,21 +82,24 @@
                 android:textSize="14sp"
                 android:layout_gravity="center"
                 android:id="@+id/sugar"
+                android:gravity="center"
                 android:text="Sugar: "/>
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:textSize="14sp"
+                android:layout_gravity="center"
+                android:id="@+id/sodium"
+                android:gravity="center"
+                android:text="Sodium: "/>
         </LinearLayout>
-        <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:textSize="14sp"
-            android:layout_gravity="center"
-            android:id="@+id/sodium"
-            android:text="Sodium: "/>
-    </LinearLayout>
+        </LinearLayout>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="2"
         android:id="@+id/list"
+        android:background="#FAFAFA"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

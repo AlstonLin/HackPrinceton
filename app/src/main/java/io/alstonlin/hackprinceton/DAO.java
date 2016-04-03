@@ -3,6 +3,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
+import android.os.Environment;
 import android.widget.Toast;
 
 import com.clarifai.api.ClarifaiClient;
@@ -20,6 +21,11 @@ import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
@@ -28,6 +34,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -38,6 +46,7 @@ import java.util.List;
  * The Singleton Data Access Object where all Networking will be handled.
  */
 public class DAO {
+    public static final String IMAGE_NAME = "img";
     public static final String SERVER_URL = "http://ec2-52-23-228-170.compute-1.amazonaws.com:3000";
     public static final String LOGIN_ENDPOINT = "/login";
     public static final String SIGN_UP_ENDPOINT = "/newuser";
@@ -52,6 +61,8 @@ public class DAO {
     public static DAO instance;
     private HistoryAdapter adapter;
     private String id = null;
+    private String imageFilePath;
+    private MainActivity activity;
 
     /**
      * Gets the Singleton DAO Object (lazy instantiation).
@@ -65,12 +76,22 @@ public class DAO {
     private DAO(){};
 
     public void addFood(Bitmap image, MainActivity activity) {
-        // Bitmap to bytes
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        image.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] bytes = stream.toByteArray();
+        // Writes to file
+        String filePath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Nutritrack";
+        File dir = new File(filePath);
+        if(!dir.exists()) dir.mkdirs();
+        try {
+            File file = new File(dir, IMAGE_NAME + ".jpg");
+            FileOutputStream fOut = new FileOutputStream(file);
+            image.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+            fOut.flush();
+            fOut.close();
+            imageFilePath = file.getAbsolutePath();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         // Uploads to clarifai
-        new AddFoodTask(activity).execute(bytes);
+        new AddFoodTask(activity).execute(image);
     }
 
     public void signup(String username, String password){
@@ -82,6 +103,7 @@ public class DAO {
     }
 
     public void getFood(HistoryAdapter adapter){
+        this.adapter = adapter;
         new GetFoodTask(adapter).execute();
     }
     // Asynchronous stuff
@@ -181,11 +203,7 @@ public class DAO {
                 } else{
                     return null;
                 }
-            } catch (IOException e){
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (ParseException e) {
+            } catch (IOException | JSONException | ParseException e){
                 e.printStackTrace();
             }
             return null;
@@ -194,11 +212,15 @@ public class DAO {
         @Override
         protected void onPostExecute(ArrayList<Food> foods) {
             super.onPostExecute(foods);
-            adapter.setDataSet(foods);
+            if (adapter != null) {
+                adapter.setDataSet(foods);
+            } else{
+                activity.setFoods(foods);
+            }
         }
     }
 
-    private class AddFoodTask extends AsyncTask<byte[], Void, Boolean> {
+    private class AddFoodTask extends AsyncTask<Bitmap, Void, Boolean> {
         private MainActivity activity;
         private Food food;
 
@@ -207,14 +229,19 @@ public class DAO {
         }
 
         @Override
-        protected Boolean doInBackground(byte[]... bytes) {
+        protected Boolean doInBackground(Bitmap... image) {
+            // Converts to bytes
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            image[0].compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] bytes = stream.toByteArray();
             // Clarifai API
             ClarifaiClient clarifai = new ClarifaiClient(CLARIFAI_APP_ID, CLARIFAI_APP_SECRET);
-            List<RecognitionResult> results = clarifai.recognize(new RecognitionRequest(bytes[0]));
+            List<RecognitionResult> results = clarifai.recognize(new RecognitionRequest(bytes));
             // Wolfram Alpha API
             String match = matchFood(results);
             if (match == null) return false;
             food = parseValues(queryFood(match));
+            food.setBitmap(image[0]);
             // Server
             return addFood(food);
         }
@@ -308,28 +335,33 @@ public class DAO {
 
     private boolean addFood(Food food){
         HttpClient client = new DefaultHttpClient();
+        MultipartEntityBuilder multipartEntity = MultipartEntityBuilder.create();
+        multipartEntity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+        ContentType contentType = ContentType.create("image/jpg");
+        multipartEntity.addPart("image", new FileBody(new File(imageFilePath), contentType, "image.jpg"));
         HttpPost post = new HttpPost(SERVER_URL + NEW_FOOD_ENDPOINT);
-        List<NameValuePair> data = new ArrayList<>(8);
-        data.add(new BasicNameValuePair("user_id", id));
-        data.add(new BasicNameValuePair("name", food.getName()));
-        data.add(new BasicNameValuePair("calories", Integer.toString(food.getCalories())));
-        data.add(new BasicNameValuePair("colesterol", Integer.toString(food.getColesterol())));
-        data.add(new BasicNameValuePair("fat", Integer.toString(food.getFat())));
-        data.add(new BasicNameValuePair("protien", Integer.toString(food.getProtien())));
-        data.add(new BasicNameValuePair("carbs", Integer.toString(food.getCarbs())));
-        data.add(new BasicNameValuePair("sugar", Integer.toString(food.getSugar())));
-        data.add(new BasicNameValuePair("sodium", Integer.toString(food.getSodium())));
-        try{
-            post.setEntity(new UrlEncodedFormEntity(data));
+        try {
+            multipartEntity.addPart("user_id", new StringBody(id));
+            multipartEntity.addPart("name", new StringBody(food.getName()));
+            multipartEntity.addPart("calories", new StringBody(Integer.toString(food.getCalories())));
+            multipartEntity.addPart("colesterol", new StringBody(Integer.toString(food.getColesterol())));
+            multipartEntity.addPart("fat", new StringBody(Integer.toString(food.getFat())));
+            multipartEntity.addPart("protien", new StringBody(Integer.toString(food.getProtien())));
+            multipartEntity.addPart("carbs", new StringBody(Integer.toString(food.getCarbs())));
+            multipartEntity.addPart("sugar", new StringBody(Integer.toString(food.getSugar())));
+            multipartEntity.addPart("sodium", new StringBody(Integer.toString(food.getSodium())));
+            post.setEntity(multipartEntity.build());
             HttpResponse response = client.execute(post);
             HttpEntity entity = response.getEntity();
             JSONObject result = new JSONObject(EntityUtils.toString(entity, "UTF-8"));
             return result.getBoolean("success");
-        } catch (IOException e){
-            e.printStackTrace();
-        } catch (JSONException e) {
+        } catch (IOException | JSONException e){
             e.printStackTrace();
         }
         return false;
+    }
+
+    public void setActivity(MainActivity activity){
+        this.activity = activity;
     }
 }

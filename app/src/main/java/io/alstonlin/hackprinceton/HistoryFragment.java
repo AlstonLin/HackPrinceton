@@ -55,6 +55,7 @@ public class HistoryFragment extends Fragment {
     }
 
     public void setupStats(){
+        if (getView() == null) return;
         TextView caloriesView = (TextView) getView().findViewById(R.id.calories);
         TextView colesterolView = (TextView) getView().findViewById(R.id.colesterol);
         TextView fatView = (TextView) getView().findViewById(R.id.fat);
@@ -82,12 +83,12 @@ public class HistoryFragment extends Fragment {
                 sugarPercent = Math.round(sugar * 100.0 / Food.HEALTHY_SUGAR),
                 sodiumPercent = Math.round(sodium * 100.0 / Food.HEALTHY_SODIUM);
 
-        caloriesView.setText("Calories: " + calories + " (" + caloriesPercent + "%)");
-        colesterolView.setText("Colesterol: " + colesterol + " (" + colesterolPercent + "%)");
-        fatView.setText("Fat: " + fat + " (" + fatPercent + "%)");
-        protienView.setText("Protien: " + protien + " (" + protienPercent + "%)");
-        carbsView.setText("Carbs: " + carbs + " (" + carbsPercent + "%)");
-        sugarView.setText("Sugar: " + sugar + " (" + sugarPercent + "%)");
-        sodiumView.setText("Sodium: " + sodium + " (" + sodiumPercent + "%)");
+        caloriesView.setText("Calories\n" + calories + " (" + caloriesPercent + "%)");
+        colesterolView.setText("Colesterol\n" + colesterol + " (" + colesterolPercent + "%)");
+        fatView.setText("Fat\n" + fat + " (" + fatPercent + "%)");
+        protienView.setText("Protien\n" + protien + " (" + protienPercent + "%)");
+        carbsView.setText("Carbs\n" + carbs + " (" + carbsPercent + "%)");
+        sugarView.setText("Sugar\n" + sugar + " (" + sugarPercent + "%)");
+        sodiumView.setText("Sodium\n" + sodium + " (" + sodiumPercent + "%)");
     }
 }

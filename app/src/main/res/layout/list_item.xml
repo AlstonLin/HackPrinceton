@@ -8,6 +8,7 @@
         android:layout_height="wrap_content"
         android:text="Food Name"
         android:id="@+id/name"
+        android:textSize="18sp"
         android:layout_gravity="center_horizontal" />
 
     <TextView
@@ -21,5 +22,6 @@
         android:layout_height="wrap_content"
         android:text="Date Time"
         android:id="@+id/time"
+        android:textStyle="italic"
         android:layout_gravity="center_horizontal" />
 </LinearLayout>

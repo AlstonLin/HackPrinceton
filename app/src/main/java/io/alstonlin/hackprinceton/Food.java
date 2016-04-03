@@ -1,5 +1,7 @@
 package io.alstonlin.hackprinceton;
 
+import android.graphics.Bitmap;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -20,7 +22,9 @@ public class Food implements Serializable{
     public static final int HEALTHY_SODIUM = 23000;
     private String name;
     private String id;
+    private String imageUrl;
     private Date createdAt;
+    private Bitmap bitmap;
     private int calories;
     private int colesterol;
     private int fat;
@@ -55,6 +59,7 @@ public class Food implements Serializable{
         this.protien = json.getInt("protien");
         this.fat = json.getInt("fat");
         this.colesterol = json.getInt("colesterol");
+        this.imageUrl = DAO.SERVER_URL + "/" + json.getString("filename");
     }
 
     public String getName() {
@@ -95,5 +100,17 @@ public class Food implements Serializable{
 
     public Date getCreatedAt() {
         return createdAt;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 }
